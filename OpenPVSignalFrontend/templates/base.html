@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/4.3.1/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free-5.3.1/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/OpenPVSignal.css') }}" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/3.3.1/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/4.3.1/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/select2/js/select2.min.js') }}"></script>
+
+     <!-- Plugin JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/1.4.1/jquery.easing.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/use_select2.js') }}"></script>
+
+    {% block extra_headers %}{% endblock %}
+
+    <title>{%  block title %}Title{% endblock %}</title>
+</head>
+<body>
+<div class="clearfix">
+    <img src="{{ url_for('static', filename='img/OpenPVSignalLogo_v01c_Editor.png') }}" class="logo img-fluid float-right mr-5" />
+</div>
+
+{% block content %}{% endblock %}
+<div class="footer"></div>
+<br>
+<br>
+<br>
+
+
+</body>
+</html>

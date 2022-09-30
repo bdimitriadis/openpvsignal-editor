@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}OpenPVSignal Editor{% endblock %}
+
+{% block extra_headers %}
+    <script src="{{ url_for('static', filename='js/messages.js') }}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <form action="{{ url_for('save') }}" class="col-6 offset-3 mb-3" method="post" role="form" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="graph_uri" value="{{ graph_uri }}">
+        <h1 class="mb-4">{{ title }}</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+			    {% for category, message in messages %}
+				    <div id="message_container" class="{{ category }}">
+					    {{message}}
+				    </div>
+			    {% endfor %}
+		    {% endif %}
+        {% endwith %}
+
+        {% if 'Pharmacovigilance_Signal_Report' in subresources %}
+            <input type="hidden" name="res_class" value="Pharmacovigilance_Signal_Report">
+            <input type="hidden" name="res_name" value="{{ title }}">
+            {%  for label in subresources["Pharmacovigilance_Signal_Report"] %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="0_{{ label }}">{{ label }}:</label>
+                    </div>
+                    <select class="custom-select" autocomplete="off" id="inputGroupSelect{{ label }}" name="0_{{ label }}">
+                    {{ defaults["Pharmacovigilance_Signal_Report"][label].0 }}
+                        {% for option in subresources["Pharmacovigilance_Signal_Report"][label] %}
+                            <option {% if defaults["Pharmacovigilance_Signal_Report"][label].0 == option %}value="{{ option }}" selected="selected"{% else %}value=""{% endif %}>
+                                {{ option }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if 'Signal' in subresources %}
+            <input type="hidden" name="res_class" value="Signal">
+            <input type="hidden" name="res_name" value="{% if 'Label' in defaults['Signal'] %}{{ defaults['Signal']['Label'].0 }}{% endif %}">
+            <div class="card collapsible-card mt-5">
+                <a data-toggle="collapse" href="#collapseSignal" aria-expanded="true" aria-controls="collapse-signal">
+                    <div class="card-header">Signal
+    {#                    <i class="fas fa-chevron-right float-right"></i>#}
+    {#                    <i class="fas fa-chevron-down float-right"></i>#}
+                    </div>
+                </a>
+
+                <div id="collapseSignal" class="card-body collapse">
+                    {%  for label in subresources['Signal'] %}
+                    <div id="collapseSignal" class="card-body collapse">
+                        <div class="input-group mb-3">
+                            <label for="1_{{ label }}">{{ label }}:</label>
+                            <input class="col-9 offset-1" type="text" name="1_{{ label }}" value="{% if defaults['Signal'][label] %}{{ defaults['Signal'][label].0 }}{% endif %}">
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="card-deck">
+                        {%  if 'Drug' in subresources %}
+                            <input type="hidden" name="res_class" value="Drug">
+                            <input type="hidden" name="res_name" value="{% if 'Label' in defaults['Drug'] %}{{ defaults['Drug']['Label'].0 }}{% endif %}">
+                            <div class="card collapsible-card">
+                                <a data-toggle="collapse" href="#collapseDrug" aria-expanded="true" aria-controls="collapse-drug"><div class="card-header">Drug</div></a>
+                                <div id="collapseDrug" class="card-body collapse">
+                                    {%  for label in subresources['Drug'] %}
+                                    <div class="input-group my-3">
+                                        <label for="2_{{ label }}">{{ label }}:</label>
+                                        <input class="col-9 offset-1" type="text" name="2_{{ label }}" value="{% if defaults['Drug'][label] %}{{ defaults['Drug'][label].0 }}{% endif %}">
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {%  if 'Adverse_Effect' in subresources %}
+                            <input type="hidden" name="res_class" value="Adverse_Effect">
+                            <input type="hidden" name="res_name" value="{% if 'Label' in defaults['Adverse_Effect'] %}{{ defaults['Adverse_Effect']['Label'].0 }}{% endif %}">
+                            <div class="card collapsible-card">
+                                <a data-toggle="collapse" href="#collapseCondition" aria-expanded="true" aria-controls="collapse-condition"><div class="card-header">Condition</div></a>
+                                <div id="collapseCondition" class="card-body collapse">
+                                    {%  for label in subresources['Adverse_Effect'] %}
+                                    <div class="input-group my-3">
+                                        <label for="3_{{ label }}">{{ label }}:</label>
+                                        <input class="col-9 offset-1" type="text" name="3_{{ label }}" value="{% if defaults['Adverse_Effect'][label] %}{{ defaults['Adverse_Effect'][label].0 }}{% endif %}">
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+        <div class = "float-right mt-2">
+            <input type="submit" class="btn mr-2 btn-def" value="Save">
+            <a role="button" href="delete" class="btn btn-def">Delete</a>
+        </div>
+
+    </form>
+{% endblock %}

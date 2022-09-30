@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}OpenPVSignal Editor{% endblock %}
+{% block extra_headers %}
+    <script src="{{ url_for('static', filename='js/table_search.js') }}"></script>
+{% endblock %}
+
+{#{% block navbar %}#}
+{#<div class="navbar navbar-fixed-top">#}
+{#  #}
+{#</div>#}
+{#{% endblock %}#}
+
+{% block content %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="col-xs-12 col-sm-10 offset-sm-1 above-table">
+        <h1>Signal Reports List</h1>
+        <div class="search mt-2">
+            <input name="search-input" class="form-control float-right useFontAwesomeFamily" type="text" placeholder="&#xf3ee; Search" >
+        </div>
+    </div>
+
+    <div id="sr_table" class = "col-xs-12 col-sm-10 offset-sm-1 mt-5 table-wrapper-scroll-y">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                  <th class="col-4" scope="col">Signal Report</th>
+                  <th class="col-4" scope="col">Source</th>
+                  <th class="col-1" scope="col">Last edit</th>
+                  <th class="col-1" scope="col">User</th>
+                    <th class="col-1" scope="col"></th>
+                    <th class="col-1" scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for instance in instances %}
+                    <tr>
+            {#            <th scope="row">1</th>#}
+                        <td>{{ instance.signal_report }}</td>
+                        <td>{{ instance.author }}</td>
+                        <td>{{ instance.last_edit }}</td>
+                        <td>{{ instance.edited_by }}</td>
+                        <td>
+                            <form method="POST" action="edit">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="graph_uri" value="{{ instance.graph_uri }}">
+                                <input type="hidden" name="resource" value="{{ instance.resource }}">
+                                <input type="hidden" name="name" value="{{ instance.signal_report }}">
+                                <button class="btn btn-link" type="submit"> Edit </button>
+                            </form>
+{#                            <a href={{ url_for("edit", resource=instance.resource, name=instance.signal_report) }}> Edit </a>#}
+                        </td>
+                        <td>
+                            <form method="POST" action="remove">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="graph_uri" value="{{ instance.graph_uri }}">
+                                <input type="hidden" name="resource" value="{{ instance.resource }}">
+                                <input type="hidden" name="name" value="{{ instance.signal_report }}">
+                                <button class="btn btn-link" type="submit"> Remove </button>
+                            </form>
+{#                            <a href={{ url_for("remove", resource=instance.resource, name=instance.signal_report) }}> Remove </a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
