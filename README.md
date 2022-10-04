@@ -2,7 +2,7 @@
 
 OpenPVSignal is an ontology aiming to foster the publication of Pharmacovigilance Signal information, which is currently communicated by drug regulatory authorities via their Newsletters or Web sites as free-text reports.
 
-OpenPVSignal-editor consists of two applications. 
+OpenPVSignal editor consists of two applications:
 
 1. The backend services, implementing the various functionalities (e.g. edit, save, remove), provided by the editor to the user
 2. The frontend which allows the user to utilize the available backend services 
