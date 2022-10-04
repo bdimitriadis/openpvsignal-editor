@@ -20,18 +20,23 @@ For OpenPVSignalDAL application, you have to install
 
 ```
 * Python 3.x.x
-* Flask via pip
-* SPARQLWrapper2 via pip
+* flask via pip
+* itsdangerous via pip
+* rdflib via pip
+* SPARQLWrapper via pip
 ```
 
 For OpenPVSignalFrontend application, you have to install
 
 ```
 * Python 3.x.x
-* Flask via pip
-* Flask-WTF via pip
-* SPARQLWrapper2 via pip
+* flask via pip
+* flask-WTF via pip
+* itsdangerous via pip
+* requests via pip
 ```
+
+Alternatively, you can install the requirement packages found in the respective requirements.txt file for each application via pip.
 
 
 ## Deployment
@@ -43,8 +48,8 @@ Adjust settings in the config.py file found in the directory of each application
 
 ## Built With
 
-* [Python 3.5.2](http://www.python.org/) - Developing with the best programming language
-* [Flask 0.12.2](http://flask.pocoo.org/) - Flask web development, one drop at a time
+* [Python 3.8.13](http://www.python.org/) - Developing with the best programming language
+* [Flask 2.2.2](http://flask.pocoo.org/) - Flask web development, one drop at a time
 
 ## Authors
 
